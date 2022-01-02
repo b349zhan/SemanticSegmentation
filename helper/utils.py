@@ -18,7 +18,7 @@ def train(data_loader, net, optimizer, loss_graph):
         optimizer.step()  # update the parameters according to the gradients
     return main_loss
 
-def train_plot(epoch, data_loader, net, optimizer, loss_graph, detail=False):
+def train_plot(epoch, data_loader, net, optimizer, loss_graph,title="Overfitted Model", detail=False):
     net.train()
     print("Starting Training...")
     loss_graph = []
@@ -31,7 +31,7 @@ def train_plot(epoch, data_loader, net, optimizer, loss_graph, detail=False):
         ax.clear()
         ax.set_xlabel('iterations')
         ax.set_ylabel('loss value')
-        ax.set_title('Training loss curve for OVERFIT_NET')
+        ax.set_title('Training loss curve for '+title)
         ax.plot(loss_graph, label='training loss')
         ax.legend(loc='upper right')
         fig.canvas.draw()
