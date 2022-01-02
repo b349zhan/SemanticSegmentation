@@ -18,7 +18,7 @@ def train(data_loader, net, optimizer, loss_graph):
         optimizer.step()  # update the parameters according to the gradients
     return main_loss
 
-def train_plot(epoch, data_loader, net, optimizer, loss_graph):
+def train_plot(epoch, data_loader, net, optimizer, loss_graph, detail=False):
     net.train()
     print("Starting Training...")
     loss_graph = []
@@ -35,7 +35,9 @@ def train_plot(epoch, data_loader, net, optimizer, loss_graph):
         ax.plot(loss_graph, label='training loss')
         ax.legend(loc='upper right')
         fig.canvas.draw()
-        if e%10==0:
+        if detail== False and e%10==0:
+            print("Epoch: {} Loss: {}".format(e, loss))
+        elif detail== True:
             print("Epoch: {} Loss: {}".format(e, loss))
     return net
 
@@ -69,7 +71,13 @@ def validate(val_loader, net):
     return val_loss, (sum(iou_arr) / len(iou_arr))
 
 def getmIoU(net, tf, img, target):
+    
     transformedImg, transformedTarget = tf(img, target)
+    if USE_GPU:
+        net = net.cuda()
+        transformedImg = transformedImg.cuda()
+        transformedTarget = transformedTarget.cuda()
+        
     output = net.forward(transformedImg[None])
     if USE_GPU:
         pred = torch.argmax(output, dim=1).cpu().numpy()[0]
@@ -95,7 +103,7 @@ def plotPrediction(net, tf, img, target):
     ax = fig.add_subplot(1,3,3)
     plt.title('Prediction')
     ax.text(10, 25, 'mIoU = {:_>8.6f}'.format(miou), fontsize=15, color='white')
-    ax.imshow(colorize_mask(torch.argmax(output, dim=1).numpy()[0]))
+    ax.imshow(colorize_mask(torch.argmax(output, dim=1).cpu().numpy()[0]))
     
 
     
