@@ -8,7 +8,7 @@ Each class is represented in pixels with different colors. Note that in our case
 
 Below are some examples about the dataset we are using. 
 
-<img width="729" alt="Screen Shot 2022-01-01 at 6 51 29 PM" src="imgs/sampleImg.png">
+<img width="980" alt="Screen Shot 2022-01-01 at 6 51 29 PM" src="imgs/sampleImg.png">
 
 The metric for model evaluation is mean Intersection over Union (mIoU), which focuses only on segment/classes, which is irrelevant to object sizes. mIoU is defined as below (screenshot from chainerCV documentation page:https://chainercv.readthedocs.io/en/stable/reference/evaluations.html#semantic-segmentation-iou ):
 
@@ -23,34 +23,34 @@ In our model, we used ResNet18's first 5 blocks as our feature encoder to extrac
 During the model fitting, we performed image segmentation with RandomResizedCrop and Random Horizontal Flip as demonstrated below:
 
 <p align="center">
-  <img src="imgs/RandomHorizontalFlip.png" height = "400" width="450">
-  <img src="imgs/RandomResizeCrop.png" height = "400"  width="450">
+  <img src="imgs/RandomHorizontalFlip.png" height = "400" width="480">
+  <img src="imgs/RandomResizeCrop.png" height = "400"  width="480">
 </p>
 
 After experimenting and augmenting the data and its transformations, we evaluate our untrained model immediately and see its performance. In our case, we only achieved 0.06 mIoU.
 
-<img src="results/untrained_performance.png" height = "250" width = "780"/>
+<img src="results/untrained_performance.png" height = "250" width = "980"/>
 
 Then we tried to overfit the model on one single image for 100 epoch. The loss graph is presented below.
-<img src="results/overfit_training.png" height = "400" width = "780"/>
+<img src="results/overfit_training.png" height = "400" width = "980"/>
 
 We can see that after 100 epoch, which is seriously overfitted, the loss is reduced / nearly converged. it reaches mIoU = accuracy on the trained image.
 
-<img src="results/overfit_prediction1.png" height = "250" width = "780"/>
+<img src="results/overfit_prediction1.png" height = "250" width = "980"/>
 
 However, we can see that it performs poorly as expected on the new image. We can also see that our model simply tries to memorize the training image. When given a new image, it tries to classify based on the knowledge of memorizing one single image. We can see that the pixel class corresponding color is grey for the validation image and the pixel class corresponding color is gree for the training image. After overfitting, model tries to predict green color instead of grey.
 
-<img src="results/overfit_prediction2.png" height = "250" width = "780"/>
+<img src="results/overfit_prediction2.png" height = "250" width = "980"/>
 
 Then, we started to train our model on the entire training set for 4 epochs with batch size = 4. The below is corresponding loss graph.
 
-<img src="results/fit_training.png" height = "400" width = "780"/>
+<img src="results/fit_training.png" height = "400" width = "980"/>
 
 We also tried to validate our result. The accuracy is improved for test image and decreased a little bit for the training image, which is what we want to avoid overfitting.
 
-<img src="results/fit_prediction1.png" height = "250" width = "780"/>
+<img src="results/fit_prediction1.png" height = "250" width = "980"/>
 
-<img src="results/fit_prediction2.png" height = "250" width = "780"/>
+<img src="results/fit_prediction2.png" height = "250" width = "980"/>
 
 
 
