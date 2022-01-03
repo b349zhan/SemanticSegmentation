@@ -13,6 +13,7 @@ Below are some examples about the dataset we are using.
 The metric for model evaluation is mean Intersection over Union (mIoU), which focuses only on segment/classes, which is irrelevant to object sizes. mIoU is defined as below (screenshot from chainerCV documentation page:https://chainercv.readthedocs.io/en/stable/reference/evaluations.html#semantic-segmentation-iou ):
 
 Nij in the below formula represents the number of pixels that are labeled as class i by the ground truth and class j by the prediction.
+
 ![Screen Shot 2022-01-01 at 7 00 17 PM](https://user-images.githubusercontent.com/54965707/147862685-79a6e50d-ad3a-4139-b30e-7e78286e3264.png)
 
 For each class, we calculate how similar is our prediction to the actual object pixelwise. More mathematically, we first calculate the intersection between our prediction and groud truth, and then we calculate the union of the prediction and ground truth. We then take the ratio of those two numbers. We have the ratio number for each class. Then, we average over all k classes, which is 21 in our case.
